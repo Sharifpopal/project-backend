@@ -37,6 +37,9 @@ services:
 
       - key: SUM_REPO
         value: HasibSharif/dari-summarizer-mt5-small
+    
+    limits:
+      memory: 512Mi
 
       # (Optional) force Python runtime version
       # - key: PYTHON_VERSION

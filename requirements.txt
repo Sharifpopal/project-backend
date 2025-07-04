@@ -1,8 +1,8 @@
 fastapi
 uvicorn[standard]
 transformers==4.41.2
-torch==2.2.2         # CPU-only wheel
-sentencepiece
+torch==2.2.2+cpu
+-f https://download.pytorch.org/whl/torch_stable.htmlsentencepiece
 requests
 beautifulsoup4        # if your scraper needs it
 huggingface_hub

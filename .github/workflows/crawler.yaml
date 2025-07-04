@@ -1,0 +1,38 @@
+name: crawl-and-ingest
+
+# ────────── triggers ──────────
+on:
+  workflow_dispatch:          # run manually from GitHub UI
+  schedule:
+    # every 30 minutes (UTC); adjust if needed
+    - cron: "*/30 * * * *"
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Check out repo (so Action can import scraping.scraper)
+    - uses: actions/checkout@v4
+
+    # 2. Set up Python
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    # 3. Install lightweight scraping dependencies
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install requests beautifulsoup4 newspaper3k python-dateutil feedparser
+
+    # 4. Run the wrapper to scrape & POST to backend
+    - name: Run scraper and ingest
+      env:
+        BACKEND_URL: ${{ secrets.BACKEND_URL }}   # Add this in repo → Settings → Secrets
+      run: |
+        python - <<'PY'
+        import os
+        from scraping.scraper import run
+        run(os.environ["BACKEND_URL"])
+        PY

@@ -1,0 +1,41 @@
+### render.yaml
+# One free-plan web service that:
+#   • Installs requirements
+#   • Starts FastAPI via Uvicorn
+#   • Gets its HF credentials & model IDs from env-vars
+
+services:
+  - type: web
+    name: news-backend              # Appears in Render dashboard
+    plan: free                      # Free tier
+    runtime: python
+
+    # ---- Build phase ----
+    buildCommand: |
+      pip install -r requirements.txt
+
+    # ---- Run phase ----
+    startCommand: |
+      uvicorn app.main:app --host 0.0.0.0 --port $PORT
+
+    # Optional: specify a region
+    # region: oregon
+
+    autoDeploy: true                # Auto-redeploy on new Git commits
+
+    # ---- Environment variables ----
+    envVars:
+      # Write-only secret: add the real value in Render dashboard
+      - key: HF_TOKEN
+        sync: false                 # “false” ⇒ not stored in repo
+
+      # Public repo IDs – safe to keep in YAML
+      - key: CLF_REPO
+        value: HasibSharif/news-classifier-pb
+
+      - key: SUM_REPO
+        value: HasibSharif/dari-summarizer-mt5-small
+
+      # (Optional) force Python runtime version
+      # - key: PYTHON_VERSION
+      #   value: "3.11"

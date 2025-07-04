@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+transformers==4.41.2
+torch==2.3.0          # CPU-only wheel
+sentencepiece
+requests
+beautifulsoup4        # if your scraper needs it
+huggingface_hub
+feedparser
+newspaper3k
+python-dateutil

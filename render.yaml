@@ -25,6 +25,8 @@ services:
 
     # ---- Environment variables ----
     envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
       # Write-only secret: add the real value in Render dashboard
       - key: HF_TOKEN
         sync: false                 # “false” ⇒ not stored in repo

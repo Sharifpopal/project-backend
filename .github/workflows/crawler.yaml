@@ -24,7 +24,10 @@ jobs:
     - name: Install dependencies
       run: |
         pip install --upgrade pip
-        pip install requests beautifulsoup4 newspaper3k python-dateutil feedparser
+        pip install \
+         requests beautifulsoup4 newspaper3k python-dateutil feedparser \
+         lxml_html_clean
+
 
     # 4. Run the wrapper to scrape & POST to backend
     - name: Run scraper and ingest

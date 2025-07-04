@@ -5,6 +5,7 @@ torch==2.2.2+cpu          # 150 MB wheel, not compiled!
 # ----------------------------------------------------------------------
 fastapi
 uvicorn[standard]
+numpy<2.0
 transformers==4.41.2
 sentencepiece
 requests

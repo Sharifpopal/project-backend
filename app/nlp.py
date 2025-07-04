@@ -20,6 +20,7 @@ HF_TOKEN  = os.environ["HF_TOKEN"]                # secret
 CLF_REPO  = os.environ["CLF_REPO"]                # e.g. HasibSharif/news-classifier-pb
 SUM_REPO  = os.environ["SUM_REPO"]                # e.g. HasibSharif/dari-summarizer-mt5-small
 
+print(os.environ["CLF_REPO"])
 HEADERS = {"Authorization": f"Bearer {HF_TOKEN}"}
 TIMEOUT = 20     # seconds
 
@@ -36,32 +37,6 @@ def _hf_post(model_id: str, payload: Dict) -> List[Dict]:
         r.raise_for_status()
         return r.json()
     raise RuntimeError(f"HF API failed for {model_id}: {r.text[:200]}")
-# tok_clf = AutoTokenizer.from_pretrained(CLF_REPO, token=HF_TOKEN)
-# clf     = AutoModelForSequenceClassification.from_pretrained(CLF_REPO, token=HF_TOKEN).eval()
-
-# tok_sum = AutoTokenizer.from_pretrained(SUM_REPO, token=HF_TOKEN)
-# summ    = AutoModelForSeq2SeqLM.from_pretrained(SUM_REPO, token=HF_TOKEN).eval()
-
-# LABEL_FA = {                             # add whichever you use
-#     "Agriculture": "زراعت",
-#     "Art-Culture": "هنر و فرهنگ",
-#     "Banking-Insurance": "اقتصاد",
-#     "Economy": "اقتصاد",
-#     "Education-University": "تحصیلات",
-#     "Health": "صحت",
-#     "Industry": "صنعت",
-#     "International": "بین‌الملل",
-#     "Local": "داخلی",
-#     "Oil-Energy": "نفت و انرژی",
-#     "Politics": "سیاست",
-#     "Research": "تحقیق",
-#     "Roads-Urban": "شهرسازی",
-#     "Science-Technology": "فناوری",
-#     "Society": "جامعه",
-#     "Sports": "ورزش",
-#     "Tourism": "گردشگری",
-#     "Transportation": "ترانسپورت",
-# }
 
 def classify(text: str) -> str:
     """
@@ -88,6 +63,12 @@ def summarise(text: str) -> str:
         "options": {"wait_for_model": True}
     })
     return resp[0]["generated_text"]
+
+
+
+
+
+
 # def classify(text: str) -> str:
 #     inp = tok_clf(text, return_tensors="pt", truncation=True, max_length=512)
 #     with torch.no_grad():
@@ -103,9 +84,29 @@ def summarise(text: str) -> str:
 #         out = summ.generate(**enc, max_length=128, num_beams=4,
 #                             no_repeat_ngram_size=3, early_stopping=True)
 #     return tok_sum.decode(out[0], skip_special_tokens=True)
+# tok_clf = AutoTokenizer.from_pretrained(CLF_REPO, token=HF_TOKEN)
+# clf     = AutoModelForSequenceClassification.from_pretrained(CLF_REPO, token=HF_TOKEN).eval()
 
+# tok_sum = AutoTokenizer.from_pretrained(SUM_REPO, token=HF_TOKEN)
+# summ    = AutoModelForSeq2SeqLM.from_pretrained(SUM_REPO, token=HF_TOKEN).eval()
 
-
-
-
-
+# LABEL_FA = {                             # add whichever you use
+#     "Agriculture": "زراعت",
+#     "Art-Culture": "هنر و فرهنگ",
+#     "Banking-Insurance": "اقتصاد",
+#     "Economy": "اقتصاد",
+#     "Education-University": "تحصیلات",
+#     "Health": "صحت",
+#     "Industry": "صنعت",
+#     "International": "بین‌الملل",
+#     "Local": "داخلی",
+#     "Oil-Energy": "نفت و انرژی",
+#     "Politics": "سیاست",
+#     "Research": "تحقیق",
+#     "Roads-Urban": "شهرسازی",
+#     "Science-Technology": "فناوری",
+#     "Society": "جامعه",
+#     "Sports": "ورزش",
+#     "Tourism": "گردشگری",
+#     "Transportation": "ترانسپورت",
+# }

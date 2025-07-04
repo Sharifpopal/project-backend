@@ -15,12 +15,17 @@ loading the models into memory.
 import os, requests, time
 from typing import Dict, List
 
+print("ENV-check:")
+print("  CLF_REPO =", os.getenv("CLF_REPO"))
+print("  SUM_REPO =", os.getenv("SUM_REPO"))
+print("  HF_TOKEN set?", bool(os.getenv("HF_TOKEN")))
+
 # Environment variables provided via Render dashboard
 HF_TOKEN  = os.environ["HF_TOKEN"]                # secret
 CLF_REPO  = os.environ["CLF_REPO"]                # e.g. HasibSharif/news-classifier-pb
 SUM_REPO  = os.environ["SUM_REPO"]                # e.g. HasibSharif/dari-summarizer-mt5-small
 
-print(os.environ["CLF_REPO"])
+# print(os.environ["CLF_REPO"])
 HEADERS = {"Authorization": f"Bearer {HF_TOKEN}"}
 TIMEOUT = 20     # seconds
 
